@@ -1,0 +1,41 @@
+# CONCEPTOS WEEK 1: 
+
+- Modelo supervisado vs modelo no supervisado
+- Número reales
+- Ecuación regresión lineal simple --> y = w1x + b
+- Ecuación de regresión lineal múltiple
+- ¿Qué es una constante?
+- ¿Qué es bias?
+- Dot product | vector notation
+- Mean Squared Error (MSE)
+- Euclidean form
+- Quadratic function
+- 2 dimensional classification
+- numpy (np.zeros, x.shape)
+
+
+[MODELO SUPERVISADO VS MODELO NO SUPERVISADO]:
+
+Modelo que requiere una serie de inputs (variables independientes/predictors) de tal forma que generar un output/target variable. Se utilizan para entrenar el modelo (supervisión). 
+
+* tipos de variables
+- predicción de glucosa en sangre: el output ese cuantitativo
+- predicción de variable cualitativa (también se denomina categorical, discreta) un número discreto de valores. Por ejemplo especias de Iris (flor). Asume un número finito de opciones. Otro ejemplo: Clasificar números del 1 al 10. 
+
+*Cuando se quiere predecir una variable cuantitativa --> regresión
+*Cuando se quiere predecir una variable cualitativa --> clasificación.
+* Las variables categóricas ordinales por ejemplo: "small", "medium", "big". Existe orden, porque small < medium < big, pero IMPORTANTE "but no metric notion is appropiate (the difference between medium and small need not to be the same as that between large and medium | CHAPTER 4: ESLII).
+
+[NÚMEROS REALES]:
+Aquellos que contienen los racionales (Q), que a su vez estos contienen a los número enteros (Z), que a su vez estos contienen a los números naturales (N); 
+Q = Fracciones/divisiones
+Z = Números enteros positivos y negativos
+N = Números naturales (1 al 9)
+
+
+
+
+
+
+
+
