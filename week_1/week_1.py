@@ -81,3 +81,85 @@ def compute_loss(X, y, w):
     loss = -((y[i]*np.log(probabilities[i])) + ((1-y[i])*np.log(1-probabilities[i])))
     total_loss.append(loss)
   return np.sum(total_loss) / len(X)
+
+
+
+# CONTEXT: Since we train our model with gradient descent, we should compute gradients.
+# To be specific, we need a derivative of loss function over each weight [6 of them].
+# El cálculo se hace a través de la derivada parcial
+
+# INSTRUCTION 4: COMPUTE GRADIENTS
+
+"""
+  Given feature matrix X [n_samples,6], target vector [n_samples] of 1/0,
+  and weight vector w [6], compute vector [6] of derivatives of L over each weights.
+  Keep in mind that our loss is averaged over all samples (rows) in X.
+"""
+
+def compute_grad(X, y, w):
+  probabilities = probability(X, w)
+  dw0 = 0
+  dw1 = 0
+  dw2 = 0
+  dw3 = 0
+  dw4 = 0
+  dw5 = 0
+  for i in range(len(X)):
+    # loss = -((y[i]*np.log(probabilities[i])) + ((1-y[i])*np.log(1-probabilities[i])))
+    dw0 += (probabilities[i]-y[i])*X[i][0]
+    dw1 += (probabilities[i]-y[i])*X[i][1]
+    dw2 += (probabilities[i]-y[i])*X[i][2]
+    dw3 += (probabilities[i]-y[i])*X[i][3]
+    dw4 += (probabilities[i]-y[i])*X[i][4]
+    dw5 += (probabilities[i]-y[i])*X[i][5]
+      
+  return np.array([dw0/len(X),dw1/len(X),dw2/len(X),dw3/len(X),dw4/len(X),dw5/len(X)])
+
+
+# INSTRUCTION 5: Training, method: Minibatch - SGD
+# Function adjusted in order to calculate compute_grad() based on the minibatch
+# 5.1 Ajdust compute grad
+
+def compute_grad(X, y, w):
+  probabilities = probability(X_expanded, w)
+  dw0 = 0
+  dw1 = 0
+  dw2 = 0
+  dw3 = 0
+  dw4 = 0
+  dw5 = 0
+  for i, dato in enumerate(ind):
+    #loss = -((y[i]*np.log(probabilities[i])) + ((1-y[i])*np.log(1-probabilities[i])))
+    dw0 += (probabilities[dato]-y[i])*X[i][0]
+    dw1 += (probabilities[dato]-y[i])*X[i][1]
+    dw2 += (probabilities[dato]-y[i])*X[i][2]
+    dw3 += (probabilities[dato]-y[i])*X[i][3]
+    dw4 += (probabilities[dato]-y[i])*X[i][4]
+    dw5 += (probabilities[dato]-y[i])*X[i][5]
+
+  return np.array([dw0/len(X),dw1/len(X),dw2/len(X),dw3/len(X),dw4/len(X),dw5/len(X)])
+  
+# 5.2 Visualization
+'''
+please use np.random.seed(42), eta=0.1, n_iter=100 and batch_size=4 for deterministic results
+'''
+np.random.seed(42)
+w = np.array([0, 0, 0, 0, 0, 1]) # NOTA: es el óptimo de aplicar SGD
+
+eta= 0.1 # learning rate
+
+n_iter = 100
+batch_size = 4
+loss = np.zeros(n_iter)
+plt.figure(figsize=(12, 5))
+
+for i in range(n_iter):
+    ind = np.random.choice(X_expanded.shape[0], batch_size)
+    loss[i] = compute_loss(X_expanded, y, w)
+    if i % 10 == 0:
+        visualize(X_expanded[ind, :], y[ind], w, loss)
+    w = w - eta*compute_grad(X_expanded[ind, :], y[ind], w)
+    
+
+visualize(X, y, w, loss)
+plt.clf()
