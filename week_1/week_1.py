@@ -163,3 +163,40 @@ for i in range(n_iter):
 
 visualize(X, y, w, loss)
 plt.clf()
+
+
+# INSTRUCTION 6:
+
+'''
+  Momentum is a method that helps accelerate SGD in the relevant direction and dampens oscillations as can be seen in image below.
+  It does this by adding a fraction  𝛼  of the update vector of the past time step to the current update vector.
+TO DO: Pending formula explanation
+'''
+# 6.1 Code for the SGD momentum: 
+
+# please use np.random.seed(42), eta=0.05, alpha=0.9, n_iter=100 and batch_size=4 for deterministic results
+np.random.seed(42)
+w = np.array([0, 0, 0, 0, 0, 1])
+
+eta = 0.05 # learning rate
+alpha = 0.9 # momentum
+nu = np.zeros_like(w)
+
+n_iter = 100
+batch_size = 4
+loss = np.zeros(n_iter)
+plt.figure(figsize=(12, 5))
+
+for i in range(n_iter):
+    ind = np.random.choice(X_expanded.shape[0], batch_size)
+    loss[i] = compute_loss(X_expanded, y, w)
+    if i % 10 == 0:
+        visualize(X_expanded[ind, :], y[ind], w, loss)
+
+    # TODO:<your code here>
+    nu = (alpha*nu) + (eta* compute_grad(X_expanded[ind, :], y[ind], w))
+    w = w-nu
+    
+
+visualize(X, y, w, loss)
+plt.clf()
