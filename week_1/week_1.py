@@ -200,3 +200,35 @@ for i in range(n_iter):
 
 visualize(X, y, w, loss)
 plt.clf()
+
+
+# INSTRUCTION 7: RMSprop (Root mean squared error prop)
+
+'''Implement RMSPROP algorithm, which use squared gradients to adjust learning rate
+TO DO: pendiente incorporar la fórmula
+'''
+# please use np.random.seed(42), eta=0.1, alpha=0.9, n_iter=100 and batch_size=4 for deterministic results
+np.random.seed(42)
+
+w = np.array([0, 0, 0, 0, 0, 1.])
+eta = 0.1 # learning rate
+alpha = 0.9 # moving average of gradient norm squared
+g2 = 0
+eps = 1e-8
+n_iter = 100
+batch_size = 4
+loss = np.zeros(n_iter)
+plt.figure(figsize=(12,5))
+for i in range(n_iter):
+  ind = np.random.choice(X_expanded.shape[0], batch_size)
+  loss[i] = compute_loss(X_expanded, y, w)
+  if i % 10 == 0:
+    visualize(X_expanded[ind, :], y[ind], w, loss)
+    #TODO:<your code here>
+  gradient = compute_grad(X_expanded[ind, :], y[ind], w)
+  g2 = alpha*g2 + (1-alpha)*(gradient**2)
+  w = w - (eta / np.sqrt(g2)+eps)*gradient
+  
+
+visualize(X, y, w, loss)
+plt.clf()
